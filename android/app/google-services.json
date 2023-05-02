@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "312467378240",
+    "firebase_url": "https://smart-posture-63f20-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "smart-posture-63f20",
+    "storage_bucket": "smart-posture-63f20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312467378240:android:06624f0ef3e84396ae0fa5",
+        "android_client_info": {
+          "package_name": "com.example.first"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312467378240-cgk8mdstevq2htia6e95o395fdokqr71.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.first",
+            "certificate_hash": "2ce26f09f4c3fd41551fa70b2999e7c0d99b7361"
+          }
+        },
+        {
+          "client_id": "312467378240-8p2ca7gtacrncnp1sd3sncqkrlo09ir4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeb5BeDTMkP0ObCgM3vQY-YY7_JQyAjgo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312467378240-8p2ca7gtacrncnp1sd3sncqkrlo09ir4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "312467378240-ngqg4a29d15eej1626avoodv52ptaoua.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.first"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

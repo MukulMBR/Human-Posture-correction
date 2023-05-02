@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "624947671913",
+    "project_id": "smart-posture-6dafb",
+    "storage_bucket": "smart-posture-6dafb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:624947671913:android:3a1f51bc9fa3f42f13c3f8",
+        "android_client_info": {
+          "package_name": "com.example.first"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "624947671913-nq01gj8rml0pd0bg4s8s4t5anbg9qiji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_gJpN_kZURe-_6RaeK_69NTB2ZTXlji0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "624947671913-nq01gj8rml0pd0bg4s8s4t5anbg9qiji.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
