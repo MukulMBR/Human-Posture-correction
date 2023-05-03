@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class About extends StatefulWidget {
+  const About({Key? key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _AboutState createState() => _AboutState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _AboutState extends State<About> {
 
   // Contact details for the app owner
   final String phoneNumber = "+91 8919866652";
@@ -141,39 +141,113 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           // Contact section with options to call, text, email, and visit website
-          Row(
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              InkWell(
-                child: Icon(Icons.phone, size: 64, color: Colors.green),
-                onTap: () {
-                  launch('tel:$phoneNumber');
-                },
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  "You can contact us by:",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
-              SizedBox(width: 20),
-              InkWell(
-                child: Icon(Icons.sms, size: 64, color: Colors.orange),
-                onTap: () {
-                  launch('sms:$phoneNumber?body=$smsMessage');
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InkWell(
+                    child: Column(
+                      children: [
+                        Icon(Icons.phone, size: 64, color: Colors.green),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          child: Text(
+                            "Call",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    onTap: () {
+                      launch('tel:$phoneNumber');
+                    },
+                  ),
+                  InkWell(
+                    child: Column(
+                      children: [
+                        Icon(Icons.sms, size: 64, color: Colors.orange),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          child: Text(
+                            "Text",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    onTap: () {
+                      launch('sms:$phoneNumber?body=$smsMessage');
+                    },
+                  ),
+                ],
               ),
-              SizedBox(width: 20),
-              InkWell(
-                child: Icon(Icons.email, size: 64, color: Colors.blue),
-                onTap: () {
-                  launch('mailto:mukulmbr@gmail.com?subject=$emailSubject&body=$emailBody');
-                },
-              ),
-              SizedBox(width: 20),
-              InkWell(
-                child: Icon(Icons.language, size: 64, color: Colors.purple),
-                onTap: (){
-                  launch(websiteUrl);
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InkWell(
+                    child: Column(
+                      children: [
+                        Icon(Icons.email, size: 64, color: Colors.blue),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          child: Text(
+                            "Email",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    onTap: () {
+                      launch('mailto:mukulmbr@gmail.com?subject=$emailSubject&body=$emailBody');
+                    },
+                  ),
+                  InkWell(
+                    child: Column(
+                      children: [
+                        Icon(Icons.language, size: 64, color: Colors.purple),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          child: Text(
+                            "Website",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    onTap: () {
+                      launch(websiteUrl);
+                    },
+                  ),
+                ],
               ),
             ],
           )
-
         ],
       ),
     ),

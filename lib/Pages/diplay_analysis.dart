@@ -5,14 +5,14 @@ import 'bad_posture_analysis.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class MyWidget extends StatefulWidget {
-  const MyWidget({Key? key}) : super(key: key);
+class Analysis extends StatefulWidget {
+  const Analysis({Key? key}) : super(key: key);
 
   @override
-  _MyWidgetState createState() => _MyWidgetState();
+  _AnalysisState createState() => _AnalysisState();
 }
 
-class _MyWidgetState extends State<MyWidget> {
+class _AnalysisState extends State<Analysis> {
   late DatabaseReference _databaseReference;
   double _sensorData = 0;
 

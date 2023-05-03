@@ -45,19 +45,105 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
-          "Logged In As: ${user!.email!}",
-          style: TextStyle(fontSize: 20),
+          "Smart Posture",
+          style: TextStyle(fontSize: 20,
+          fontWeight: FontWeight.bold,),
         ),
         actions: [
           IconButton(
-            onPressed: signUserOut,
-            icon: const Icon(Icons.logout),
-          )
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Point()),
+              );
+            },
+            icon: const Icon(Icons.scoreboard),
+          ),
         ],
+
       ),
       body: Center(
         child: Text('Home Page'),
+      ),
+      drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  
+                  SizedBox(height: 10),
+                  Text(
+                    "Hello: ${user!.email!}",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            ListTile(
+              title: const Text('Home'),
+              leading: Icon(Icons.home),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Profile'),
+              leading: Icon(Icons.person), // icon here
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Analysis'),
+              leading: Icon(Icons.analytics), // icon here
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Analysis()),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('About'),
+              leading: Icon(Icons.info), // icon here
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => About()),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Logout'),
+              leading: Icon(Icons.logout),
+              onTap: () {
+                signUserOut();
+              },
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -97,13 +183,13 @@ class _HomePageState extends State<HomePage> {
             // handle profile button tap
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MyWidget()),
+              MaterialPageRoute(builder: (context) => Analysis()),
             );
           } else if (index == 3) {
             // handle about button tap
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Point()),
+              MaterialPageRoute(builder: (context) => About()),
             );
           }
         },
