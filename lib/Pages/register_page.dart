@@ -68,9 +68,12 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     }
 
-    Future addUserDetails(
-    String firstname, String lastname, String email, int age, String dropdownValue) async{
-    await FirebaseFirestore.instance.collection('users').add({
+    Future<void> addUserDetails(
+      String firstname, String lastname, String email, int age, String dropdownValue) async {
+      CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
+      DocumentReference newUserRef = usersCollection.doc(); // creates a new document reference with a unique id
+      await newUserRef.set({
+        'id': newUserRef.id, // add the unique id as a field in the document
         'first name': firstname,
         'last name': lastname,
         'email': email,
@@ -78,6 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
         'sensor': dropdownController.text,
       });
     }
+
 
     bool passwordConfirmed(){
       if(passwordController.text.trim() ==confirmpasswordController.text.trim()){

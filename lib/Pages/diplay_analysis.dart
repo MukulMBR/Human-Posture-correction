@@ -2,10 +2,13 @@ import 'package:smartposture/Pages/analysis.dart';
 import 'package:smartposture/Pages/piechart.dart';
 import 'package:flutter/material.dart';
 import 'bad_posture_analysis.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class Analysis extends StatefulWidget {
+  
   const Analysis({Key? key}) : super(key: key);
 
   @override
@@ -13,19 +16,48 @@ class Analysis extends StatefulWidget {
 }
 
 class _AnalysisState extends State<Analysis> {
+  User? user = FirebaseAuth.instance.currentUser;
   late DatabaseReference _databaseReference;
   double _sensorData = 0;
+  List<String> docIDs = [];
+  late final String documentId;
+  
+  //get document IDs
+  Future<void> getDocID() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: user?.email)
+        .get();
+
+    setState(() {
+      docIDs = querySnapshot.docs.map((doc) => doc.id).toList();
+    });
+  }
+
+  List<String> gaugeDocIDs = [];
 
   @override
   void initState() {
     super.initState();
-    _databaseReference = FirebaseDatabase.instance.reference().child('distance');
-    _databaseReference.onValue.listen((event) {
-      setState(() {
-        _sensorData = double.parse(event.snapshot.value.toString());
-      });
+    getDocID().then((value) {
+      if (docIDs.isNotEmpty) {
+        documentId = docIDs[0];
+        _databaseReference = FirebaseDatabase.instance.reference().child('/users/$documentId/Smart Chair/distance');
+        _databaseReference.onValue.listen((event) {
+          setState(() {
+            gaugeDocIDs = docIDs;
+            _sensorData = double.parse(event.snapshot.value.toString());
+          });
+        });
+      } else {
+        // handle error: no document found for the user
+      }
+    }).catchError((error) {
+      // handle error: failed to fetch the document ID
     });
   }
+
+
 
   @override
   void dispose() {
@@ -94,7 +126,7 @@ class _AnalysisState extends State<Analysis> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        currentIndex: 0,// set the background color to green
+        currentIndex: 0,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.stacked_line_chart),

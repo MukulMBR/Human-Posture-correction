@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class GetUserDetails extends StatefulWidget {
   final String documentId;
@@ -14,6 +13,8 @@ class _GetUserDetailsState extends State<GetUserDetails> {
   late TextEditingController _ageController;
   late TextEditingController _emailController;
   late TextEditingController _sensorController;
+  late TextEditingController _userIdController;
+  
   late String _dropdownValue;
 
   final List<String> _dropdownItems = ['Smart Chair', 'Smart Posture', 'Both'];
@@ -28,6 +29,7 @@ class _GetUserDetailsState extends State<GetUserDetails> {
     _ageController = TextEditingController();
     _emailController = TextEditingController();
     _sensorController = TextEditingController();
+    _userIdController = TextEditingController();
     _dropdownValue = '';
   }
   @override
@@ -37,6 +39,7 @@ class _GetUserDetailsState extends State<GetUserDetails> {
     _ageController.dispose();
     _emailController.dispose();
     _sensorController.dispose();
+    _userIdController.dispose();
     super.dispose();
   }
   @override
@@ -56,11 +59,13 @@ class _GetUserDetailsState extends State<GetUserDetails> {
           _emailController.text = data['email'];
           _sensorController.text = data['sensor'];
           _dropdownValue = data['sensor'];
+          _userIdController.text = snapshot.data!.id;
           return Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+              //Text("User ID: ${widget.documentId}"),
                 TextFormField(
                   controller: _firstNameController,
                   decoration: InputDecoration(
