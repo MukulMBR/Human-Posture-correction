@@ -7,13 +7,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class Posture extends StatefulWidget {
-  const Posture({Key? key}) : super(key: key);
+class SmartPosture extends StatefulWidget {
+  const SmartPosture({Key? key}) : super(key: key);
   @override
-  _PostureState createState() => _PostureState();
+  _SmartPostureState createState() => _SmartPostureState();
 }
 
-class _PostureState extends State<Posture> {
+class _SmartPostureState extends State<SmartPosture> {
   User? user = FirebaseAuth.instance.currentUser;
   late DatabaseReference _databaseReference;
   double _sensorData = 0;

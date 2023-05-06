@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:smartposture/Pages/points.dart';
 import 'package:smartposture/Pages/sensors.dart';
+import 'package:smartposture/Pages/sensors.dart';
 import 'package:smartposture/profile/about.dart';
 import 'package:flutter/material.dart';
 import '../profile/profile.dart';
@@ -146,13 +147,13 @@ class _HomePageState extends State<HomePage> {
               }else if(sensorValue == 'Smart Posture'){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Posture()),
+                  MaterialPageRoute(builder: (context) => SmartPosture()),
                 );
               }
               else if(sensorValue=='Both'){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Analysis()),
+                  MaterialPageRoute(builder: (context) => Posture()),
                 );
               }
               },
@@ -216,18 +217,18 @@ class _HomePageState extends State<HomePage> {
             if(sensorValue=='Smart Chair'){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => sensors()),
+                  MaterialPageRoute(builder: (context) => Analysis()),
                 );
               }else if(sensorValue == 'Smart Posture'){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Posture()),
+                  MaterialPageRoute(builder: (context) => SmartPosture()),
                 );
               }
               else if(sensorValue=='Both'){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => sensors()),
+                  MaterialPageRoute(builder: (context) => Posture()),
                 );
               }
               else if(sensorValue==null){
