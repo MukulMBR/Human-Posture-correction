@@ -9,8 +9,6 @@ import 'package:smartposture/components/square_title.dart';
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
   const LoginPage({super.key,required this.onTap});
-  
-
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -18,7 +16,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   // text editing controllers
   final EmailController = TextEditingController();
-
   final passwordController = TextEditingController();
 
   // sign user in method
@@ -33,8 +30,6 @@ class _LoginPageState extends State<LoginPage> {
         );
       },
     );
-
-
     //try sign in
 
     try{
@@ -42,17 +37,12 @@ class _LoginPageState extends State<LoginPage> {
       email: EmailController.text, 
       password: passwordController.text
       );
-
       Navigator.pop(context);
-
     } on FirebaseAuthException catch (e) {
-
       Navigator.pop(context);
       //show error message
       showErrorMessage(e.code);
-      
     }
-    
   }
 
   //wrong email message popup
@@ -72,7 +62,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,13 +73,11 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 50),
-
               // logo
               const Icon(
                 Icons.lock,
                 size: 50,
               ),
-
               const SizedBox(height: 50),
 
               // welcome back, you've been missed!
@@ -160,7 +147,6 @@ class _LoginPageState extends State<LoginPage> {
                 text: 'Sign In',
                 onTap: signUserIn,
               ),
-
               const SizedBox(height: 50),
 
               // or continue with

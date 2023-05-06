@@ -83,7 +83,9 @@ flutter:
   - lib/imports/images/apple.jpg
   - lib/imports/images/google.jpg
   - lib/imports/assets/1.csv
-  - lib/imports/assets/file.svg
+  - lib/imports/images/sp.png
+  - lib/imports/images/sc.png
+  - lib/imports/assets/sc.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

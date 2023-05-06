@@ -4,15 +4,12 @@ import 'package:smartposture/components/my_textfield.dart';
 
 class ForgotPasswordPage extends StatefulWidget{
   const ForgotPasswordPage({ Key? key}) : super(key: key);
-
   @override
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
-  
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage>{
   final _EmailController=TextEditingController();
-
 
   @override
   void dispose(){
@@ -60,7 +57,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>{
               style: TextStyle(fontSize: 20),
               ),
           ),
-
           SizedBox(height: 10),
 
           MyTextField(
@@ -77,8 +73,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>{
               )
         ],
       ),
-
     );
   }
-  
 }

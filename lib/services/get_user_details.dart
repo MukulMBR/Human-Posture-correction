@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class GetUserDetails extends StatefulWidget {
   final String documentId;
-  GetUserDetails({required this.documentId});
+  GetUserDetails({required this.documentId,});
   @override
   _GetUserDetailsState createState() => _GetUserDetailsState();
 }
@@ -14,10 +14,6 @@ class _GetUserDetailsState extends State<GetUserDetails> {
   late TextEditingController _emailController;
   late TextEditingController _sensorController;
   late TextEditingController _userIdController;
-  
-  late String _dropdownValue;
-
-  final List<String> _dropdownItems = ['Smart Chair', 'Smart Posture', 'Both'];
   
 
   final _formKey = GlobalKey<FormState>();
@@ -30,7 +26,6 @@ class _GetUserDetailsState extends State<GetUserDetails> {
     _emailController = TextEditingController();
     _sensorController = TextEditingController();
     _userIdController = TextEditingController();
-    _dropdownValue = '';
   }
   @override
   void dispose() {
@@ -58,7 +53,6 @@ class _GetUserDetailsState extends State<GetUserDetails> {
           _ageController.text = data['age'].toString();
           _emailController.text = data['email'];
           _sensorController.text = data['sensor'];
-          _dropdownValue = data['sensor'];
           _userIdController.text = snapshot.data!.id;
           return Form(
             key: _formKey,
@@ -132,38 +126,21 @@ class _GetUserDetailsState extends State<GetUserDetails> {
                     return null;
                   },
                 ),
+                TextFormField(
+                  controller: _sensorController,
+                  decoration: InputDecoration(
+                    labelText: 'Sensor',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a sensor value';
+                    } else if (value != 'Smart Chair' && value != 'Smart Posture' && value != 'Both') {
+                      return 'Please enter one of the following values: Smart Chair, Smart Posture, Both';
+                    }
+                    return null;
+                  },
+                ),
 
-                DropdownButtonFormField(
-  value: _dropdownValue,
-  decoration: InputDecoration(
-    labelText: 'Sensor',
-  ),
-  items: [
-    DropdownMenuItem(
-      value: 'Smart Chair',
-      child: Text('Smart Chair'),
-    ),
-    DropdownMenuItem(
-      value: 'Smart Posture',
-      child: Text('Smart Posture'),
-    ),
-    DropdownMenuItem(
-      value: 'Both',
-      child: Text('Both'),
-    ),
-  ],
-  onChanged: (value) {
-    setState(() {
-      _dropdownValue = value.toString();
-    });
-  },
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'Please select a sensor';
-    }
-    return null;
-  },
-),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {

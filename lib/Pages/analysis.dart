@@ -13,7 +13,6 @@ class _ChartPageState extends State<ChartPage> {
 
   _generateDataFromCsv(String csv) {
     List<DataPoint> dataPoints = [];
-
     LineSplitter ls = new LineSplitter();
     List<String> lines = ls.convert(csv);
 

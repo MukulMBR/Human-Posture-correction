@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:smartposture/Pages/points.dart';
+import 'package:smartposture/Pages/sensors.dart';
 import 'package:smartposture/profile/about.dart';
 import 'package:flutter/material.dart';
 import '../profile/profile.dart';
-import 'diplay_analysis.dart';
+import 'smartchair.dart';
+import 'smartposture.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,26 +18,46 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   User? user = FirebaseAuth.instance.currentUser!;
+  late DatabaseReference _databaseReference;
+  late final String documentId;
+  String sensorValue = '';
+
+  
 
   // document IDs
   List<String> docIDs = [];
 
   // get document IDs
   Future<void> getDocID() async {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .where('email', isEqualTo: user?.email)
-        .get();
+  QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('email', isEqualTo: user?.email)
+      .get();
 
-    setState(() {
-      docIDs = querySnapshot.docs.map((doc) => doc.id).toList();
-    });
-  }
+  setState(() {
+    docIDs = querySnapshot.docs.map((doc) => doc.id).toList();
+    // Get the sensor value from the first document in the query snapshot
+    Map<String, dynamic>? userData = querySnapshot.docs[0].data() as Map<String, dynamic>?;
+    sensorValue = (userData?['sensor'] as String?)!;
+  });
+}
+
 
   @override
   void initState() {
     super.initState();
-    getDocID();
+    getDocID().then((value) {
+      if (docIDs.isNotEmpty) {
+        documentId = docIDs[0];
+        _databaseReference = FirebaseDatabase.instance.reference().child('/users/$documentId');
+        _databaseReference.onValue.listen((event) {
+        });
+      } else {
+        // handle error: no document found for the user
+      }
+    }).catchError((error) {
+      // handle error: failed to fetch the document ID
+    });
   }
 
   void signUserOut() {
@@ -68,11 +91,7 @@ class _HomePageState extends State<HomePage> {
         child: Text('Home Page'),
       ),
       drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
         child: ListView(
-          // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
@@ -85,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                   
                   SizedBox(height: 10),
                   Text(
-                    "Hello: ${user!.email!}",
+                    "Hello: ${user!.email!} with ${sensorValue}",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -119,10 +138,23 @@ class _HomePageState extends State<HomePage> {
               title: const Text('Analysis'),
               leading: Icon(Icons.analytics), // icon here
               onTap: () {
+                if(sensorValue=='Smart Chair'){
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Analysis()),
                 );
+              }else if(sensorValue == 'Smart Posture'){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Posture()),
+                );
+              }
+              else if(sensorValue=='Both'){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Analysis()),
+                );
+              }
               },
             ),
             ListTile(
@@ -181,10 +213,43 @@ class _HomePageState extends State<HomePage> {
             );
           } else if (index == 2) {
             // handle profile button tap
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Analysis()),
-            );
+            if(sensorValue=='Smart Chair'){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => sensors()),
+                );
+              }else if(sensorValue == 'Smart Posture'){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Posture()),
+                );
+              }
+              else if(sensorValue=='Both'){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => sensors()),
+                );
+              }
+              else if(sensorValue==null){
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Buy our product!"),
+                      content: Text("Sorry to see this you haven't bought our product"),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text("Okay"),
+                          onPressed: () {
+                            // TODO: Implement buy product logic here
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
           } else if (index == 3) {
             // handle about button tap
             Navigator.push(

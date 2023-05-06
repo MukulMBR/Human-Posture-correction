@@ -7,10 +7,8 @@ class AuthService{
     //begin interactive sign in process
     final GoogleSignInAccount? gUser =await GoogleSignIn().signIn();
 
-
     //obtain auth details from  request
     final GoogleSignInAuthentication gAuth =await gUser!.authentication;
-
 
     //create a new credential for user
     // ignore: non_constant_identifier_names

@@ -107,7 +107,6 @@ void _addIntervalPoints(DateTime intervalStart, double intervalPoints, double ba
                   },
                 ),
             ),
-            
           ],
         ),
       ),

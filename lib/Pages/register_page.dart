@@ -25,8 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final dropdownController = TextEditingController();
 
     String? dropdownValue;
-
-
+    
     SnackBar snackBar = SnackBar(
     content: Text('Please fill in all required fields.'),
     backgroundColor: Colors.red,
@@ -68,12 +67,9 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     }
 
-    Future<void> addUserDetails(
-      String firstname, String lastname, String email, int age, String dropdownValue) async {
-      CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
-      DocumentReference newUserRef = usersCollection.doc(); // creates a new document reference with a unique id
-      await newUserRef.set({
-        'id': newUserRef.id, // add the unique id as a field in the document
+    Future addUserDetails(
+    String firstname, String lastname, String email, int age, String dropdownValue) async{
+    await FirebaseFirestore.instance.collection('users').add({
         'first name': firstname,
         'last name': lastname,
         'email': email,
@@ -81,7 +77,6 @@ class _RegisterPageState extends State<RegisterPage> {
         'sensor': dropdownController.text,
       });
     }
-
 
     bool passwordConfirmed(){
       if(passwordController.text.trim() ==confirmpasswordController.text.trim()){

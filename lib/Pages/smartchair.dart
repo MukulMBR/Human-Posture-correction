@@ -8,9 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class Analysis extends StatefulWidget {
-  
   const Analysis({Key? key}) : super(key: key);
-
   @override
   _AnalysisState createState() => _AnalysisState();
 }
@@ -28,16 +26,13 @@ class _AnalysisState extends State<Analysis> {
         .collection('users')
         .where('email', isEqualTo: user?.email)
         .get();
-
-    setState(() {
-      docIDs = querySnapshot.docs.map((doc) => doc.id).toList();
-    });
+      setState(() {
+        docIDs = querySnapshot.docs.map((doc) => doc.id).toList();
+      });
   }
-
   List<String> gaugeDocIDs = [];
-
   @override
-  void initState() {
+void initState() {
     super.initState();
     getDocID().then((value) {
       if (docIDs.isNotEmpty) {
@@ -48,28 +43,78 @@ class _AnalysisState extends State<Analysis> {
             gaugeDocIDs = docIDs;
             _sensorData = double.parse(event.snapshot.value.toString());
           });
+        }, onError: (Object? error) {
+          // handle error: failed to fetch sensor data from the realtime database
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Error'),
+                content: Text('Failed to fetch sensor data from the realtime database. Please check the database path and try again.'),
+                actions: [
+                  TextButton(
+                    child: Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
         });
       } else {
         // handle error: no document found for the user
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text('No document found for the user. Please check your account and try again.'),
+              actions: [
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
       }
     }).catchError((error) {
       // handle error: failed to fetch the document ID
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Failed to fetch the document ID from Firestore. Please check your account and try again.'),
+            actions: [
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
     });
   }
-
-
 
   @override
   void dispose() {
     _databaseReference.onDisconnect();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Widget'),
+        title: const Text('Smart Chair'),
       ),
       body: Center(
         child: SfRadialGauge(
