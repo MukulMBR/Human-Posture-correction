@@ -52,6 +52,8 @@ dependencies:
   url_launcher: ^6.1.10
   http: ^0.13.5
   flutter_svg: ^2.0.5
+  flutter_about_page: ^0.0.1
+  package_info_plus: ^4.0.0
   
 
 dev_dependencies:
@@ -82,6 +84,8 @@ flutter:
   - lib/imports/images/mb.jpg
   - lib/imports/images/apple.jpg
   - lib/imports/images/google.jpg
+  - lib/imports/images/icon.jpeg
+  - lib/imports/images/kcpd.jpg
   - lib/imports/assets/1.csv
   - lib/imports/images/sp.png
   - lib/imports/images/sc.jpg

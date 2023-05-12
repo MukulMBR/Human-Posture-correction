@@ -134,8 +134,8 @@ class _GetUserDetailsState extends State<GetUserDetails> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a sensor value';
-                    } else if (value != 'Smart Chair' && value != 'Smart Posture' && value != 'Both') {
-                      return 'Please enter one of the following values: Smart Chair, Smart Posture, Both';
+                    } else if (value != 'Smart Chair' && value != 'Smart Posture' && value != 'Smart C P') {
+                      return 'Please enter one of the following values: Smart Chair, Smart Posture, Smart C P';
                     }
                     return null;
                   },

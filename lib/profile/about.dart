@@ -1,256 +1,240 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:smartposture/profile/details.dart';
+import '../components/about.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'contributors.dart';
 
-class About extends StatefulWidget {
-  const About({Key? key}) : super(key: key);
+  class PackageInfoWidget extends StatefulWidget {
+    @override
+    _PackageInfoWidgetState createState() => _PackageInfoWidgetState();
+  }
 
-  @override
-  _AboutState createState() => _AboutState();
-}
+  class _PackageInfoWidgetState extends State<PackageInfoWidget> {
+    PackageInfo? _packageInfo;
 
-class _AboutState extends State<About> {
+    @override
+    void initState() {
+      super.initState();
+      _initPackageInfo();
+    }
 
-  // Contact details for the app owner
-  final String phoneNumber = "+91 8919866652";
-  final String smsMessage = "Hi, welcome to Smart Posture";
-  final String emailSubject = "This is the subject title";
-  final String emailBody = "This is the body of the email";
-  final String websiteUrl = "https://posture2.wordpress.com/";
+    Future<void> _initPackageInfo() async {
+      final packageInfo = await PackageInfo.fromPlatform();
+      setState(() {
+        _packageInfo = packageInfo;
+      });
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Good Posture App'),
-      ),
-      body: SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Header section with app information and developer details
-          Container(
-            width: double.infinity,
-            color: Colors.blueGrey,
-            padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Welcome to the Good Posture App!",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "Developed by:",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  "M Mukul Bushi Reddy",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  "Kotha Venkata Dheeraj Manjunadh Guptha",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  "Karanam Balaram",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  "Puli Gnana Venkata Satya Sai Naga nikhil",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "Guide:",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  "Mr. Sumesk AK",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 20),
-          Text(
-            'At our company, we believe that technology can be used to make people\'s lives better. That\'s why we developed this app, which is designed to help you improve your posture and reduce the risk of pain and injury.',
-            style: TextStyle(
-              fontSize: 18.0,
-            ),
-          ),
-          SizedBox(height: 16.0),
-          Text(
-            'Our team is made up of experienced software developers, designers, and health professionals who are passionate about creating innovative solutions that make a real difference. We\'ve worked hard to create an app that is easy to use, effective, and enjoyable.',
-            style: TextStyle(
-              fontSize: 18.0,
-            ),
-          ),
-          SizedBox(height: 16.0),
-          Text(
-            'Our app uses the latest technology to analyze your posture and provide you with personalized recommendations for improvement. We understand that maintaining good posture can be difficult, but with our app, you\'ll have the tools you need to make it a habit.',
-            style: TextStyle(
-              fontSize: 18.0,
-            ),
-          ),
-          SizedBox(height: 16.0),
-          Text(
-            'Thank you for choosing our app. We hope that it helps you to feel more comfortable and confident in your daily life.',
-            style: TextStyle(
-              fontSize: 18.0,
-            ),
-          ),
-          SizedBox(height: 16.0),
-          Text(
-            'If you have any questions or feedback, please don\'t hesitate to reach out We\'d love to hear from you!',
-            style: TextStyle(
-              fontSize: 18.0,
-            ),
-          ),
-          // Contact section with options to call, text, email, and visit website
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+    @override
+ Widget build(BuildContext context) {
+  return Center(
+    child: _packageInfo == null
+        ? const CircularProgressIndicator()
+        : Row(
+            mainAxisAlignment: MainAxisAlignment.center, // center horizontally
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Text(
-                  "You can contact us by:",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+              Image.asset(
+                'lib/imports/images/icon.jpeg', // Replace with your app icon asset path
+                width: 60,
+                height: 60,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              const SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  InkWell(
-                    child: Column(
-                      children: [
-                        Icon(Icons.phone, size: 64, color: Colors.green),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          child: Text(
-                            "Call",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      launch('tel:$phoneNumber');
-                    },
+                  Text(
+                    'Smart Pasture',
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  InkWell(
-                    child: Column(
-                      children: [
-                        Icon(Icons.sms, size: 64, color: Colors.orange),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          child: Text(
-                            "Text",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      launch('sms:$phoneNumber?body=$smsMessage');
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
-                    child: Column(
-                      children: [
-                        Icon(Icons.email, size: 64, color: Colors.blue),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          child: Text(
-                            "Email",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      launch('mailto:mukulmbr@gmail.com?subject=$emailSubject&body=$emailBody');
-                    },
-                  ),
-                  InkWell(
-                    child: Column(
-                      children: [
-                        Icon(Icons.language, size: 64, color: Colors.purple),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          child: Text(
-                            "Website",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      launch(websiteUrl);
-                    },
+                  Text(
+                    'Version: ${_packageInfo!.version}',
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ],
               ),
             ],
-          )
-        ],
+          ),
+    );
+  }
+}
+
+  class DottedLineDivider extends StatelessWidget {
+    final double height;
+    final Color color;
+    final double dotRadius;
+    final double dotSpacing;
+
+    DottedLineDivider({
+      this.height = 1.0,
+      this.color = Colors.black,
+      this.dotRadius = 2.0,
+      this.dotSpacing = 4.0,
+    });
+
+    @override
+    Widget build(BuildContext context) {
+      return SizedBox(
+        height: height,
+        child: CustomPaint(
+          painter: _DottedLinePainter(
+            color: color,
+            dotRadius: dotRadius,
+            dotSpacing: dotSpacing,
+          ),
+        ),
+      );
+    }
+  }
+
+  class _DottedLinePainter extends CustomPainter {
+    final Color color;
+    final double dotRadius;
+    final double dotSpacing;
+
+    _DottedLinePainter({
+      this.color = Colors.black,
+      this.dotRadius = 2.0,
+      this.dotSpacing = 4.0,
+    });
+
+    @override
+    void paint(Canvas canvas, Size size) {
+      final paint = Paint()
+        ..color = color
+        ..strokeWidth = size.height
+        ..strokeCap = StrokeCap.round;
+
+      final double dashWidth = dotRadius * 2 + dotSpacing;
+      int dotsCount = (size.width / dashWidth).floor();
+      double startX = (size.width - dashWidth * dotsCount + dotSpacing) / 2;
+
+      for (int i = 0; i < dotsCount; i++) {
+        double x = startX + i * dashWidth;
+        canvas.drawCircle(Offset(x, size.height / 2), dotRadius, paint);
+      }
+    }
+
+    @override
+    bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  }
+
+
+  class AboutActivityState extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    AboutPage ab = AboutPage();
+    ab.customStyle(descFontFamily: "Roboto",listTextFontFamily: "RobotoMedium");
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text("About Page"),
+        centerTitle: true,
       ),
-    ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            flex: 3,
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 40.0,
+                  child: ClipOval(
+                    child: Image.asset(
+                      'lib/imports/images/kcpd.jpg',
+                      fit: BoxFit.cover,
+                      width: 160.0,
+                      height: 160.0,
+                    ),
+                  ),
+                ),
+                ab.addDescription("Our team is made up of experienced software developers, designers, and health professionals who are passionate about creating innovative solutions that make a real difference. We\'ve worked hard to create an app that is easy to use, effective, and enjoyable."),
+              ],
+            ),
+          ),
+          DottedLineDivider(height: 1.0, color: Colors.grey),
+          Expanded(
+            flex: 3,
+            child: ListView(
+              children: [
+                Row(
+                  children: [
+                    Expanded(flex: 1, child: ab.addEmail("mukulmbr@gmail.com")),
+                    Expanded(flex: 1, child: ab.addPhone("+91 8919866652")),
+                    Expanded(flex: 1, child: ab.addText("+91 8919866652"))
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(flex: 1, child: ab.addFacebook("balaram.karanam.5")),
+                    Expanded(flex: 1, child: ab.addInstagram("dheerajmanjunadha")),
+                    Expanded(flex: 1, child: ab.addTwitter("Twitter")),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(flex: 1, child: ab.addYoutube("YouTube")),
+                    Expanded(flex: 1, child: ab.addGithub("MukulMBR")),
+                    Expanded(flex: 1, child: ab.addWebsite("https://posture2.wordpress.com/")),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          DottedLineDivider(height: 1.0, color: Colors.grey),
+          Expanded(
+            flex: 3,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PackageInfoWidget(),
+                  ],
+                ),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ContributorPage()),
+                        );
+                      },
+                      child: Row(
+                        children:[
+                          Icon(Icons.people),
+                          const SizedBox(width: 5),
+                          Text('Contributors'),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => About()),
+                        );
+                      },
+                      child: Row(
+                        children:[
+                          Icon(Icons.warning),
+                          const SizedBox(width: 5),
+                          Text('Disclaimer'),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ]
+      ),
     );
   }
 }

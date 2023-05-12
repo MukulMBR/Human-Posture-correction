@@ -5,8 +5,10 @@ import 'package:smartposture/Pages/points.dart';
 import 'package:smartposture/Pages/sensors.dart';
 import 'package:smartposture/Pages/sensors.dart';
 import 'package:smartposture/profile/about.dart';
+import 'package:smartposture/profile/details.dart';
 import 'package:flutter/material.dart';
 import '../profile/profile.dart';
+import '../services/wifi.dart';
 import 'smartchair.dart';
 import 'smartposture.dart';
 
@@ -71,7 +73,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "Smart Posture",
+          "$sensorValue",
           style: TextStyle(fontSize: 20,
           fontWeight: FontWeight.bold,),
         ),
@@ -150,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(builder: (context) => SmartPosture()),
                 );
               }
-              else if(sensorValue=='Both'){
+              else if(sensorValue=='Smart C P'){
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Posture()),
@@ -164,7 +166,7 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => About()),
+                  MaterialPageRoute(builder: (context) => AboutActivityState()),
                 );
               },
             ),
@@ -198,6 +200,10 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.info),
             label: 'About',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.wifi),
+            label: '$sensorValue',
+          ),
         ],
         onTap: (index) {
           if (index == 0) {
@@ -225,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(builder: (context) => SmartPosture()),
                 );
               }
-              else if(sensorValue=='Both'){
+              else if(sensorValue=='Smart C P'){
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Posture()),
@@ -255,7 +261,13 @@ class _HomePageState extends State<HomePage> {
             // handle about button tap
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => About()),
+              MaterialPageRoute(builder: (context) => PackageInfoWidget()),
+            );
+          } else if (index == 4) {
+            // handle about button tap
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyApp()),
             );
           }
         },

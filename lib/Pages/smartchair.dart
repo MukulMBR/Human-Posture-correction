@@ -19,6 +19,7 @@ class _AnalysisState extends State<Analysis> {
   double _sensorData = 0;
   List<String> docIDs = [];
   late final String documentId;
+  String sensorValue = '';
   
   //get document IDs
   Future<void> getDocID() async {
@@ -28,6 +29,8 @@ class _AnalysisState extends State<Analysis> {
         .get();
       setState(() {
         docIDs = querySnapshot.docs.map((doc) => doc.id).toList();
+            Map<String, dynamic>? userData = querySnapshot.docs[0].data() as Map<String, dynamic>?;
+            sensorValue = (userData?['sensor'] as String?)!;
       });
   }
   List<String> gaugeDocIDs = [];
@@ -37,7 +40,7 @@ void initState() {
     getDocID().then((value) {
       if (docIDs.isNotEmpty) {
         documentId = docIDs[0];
-        _databaseReference = FirebaseDatabase.instance.reference().child('/users/$documentId/Smart Chair/distance');
+        _databaseReference = FirebaseDatabase.instance.reference().child('/users/$documentId/$sensorValue/distance');
         _databaseReference.onValue.listen((event) {
           setState(() {
             gaugeDocIDs = docIDs;
@@ -150,7 +153,7 @@ void initState() {
               annotations: <GaugeAnnotation>[
                 GaugeAnnotation(
                   widget: Text(
-                    'Sensor data',
+                    '$sensorValue',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   positionFactor: 0.1,

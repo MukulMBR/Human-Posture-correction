@@ -211,7 +211,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   }
                   return null;
                 },
-                items: <String>['Smart Chair', 'Smart Posture', 'Both']
+                items: <String>['Smart Chair', 'Smart Posture', 'Smart C P']
                     .map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,

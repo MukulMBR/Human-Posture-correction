@@ -19,6 +19,7 @@ class _SmartPostureState extends State<SmartPosture> {
   double _sensorData = 0;
   List<String> docIDs = [];
   late final String documentId;
+  String sensorValue = '';
   
   //get document IDs
   Future<void> getDocID() async {
@@ -28,6 +29,8 @@ class _SmartPostureState extends State<SmartPosture> {
         .get();
       setState(() {
         docIDs = querySnapshot.docs.map((doc) => doc.id).toList();
+            Map<String, dynamic>? userData = querySnapshot.docs[0].data() as Map<String, dynamic>?;
+            sensorValue = (userData?['sensor'] as String?)!;
       });
   }
   List<String> gaugeDocIDs = [];
@@ -37,7 +40,7 @@ class _SmartPostureState extends State<SmartPosture> {
     getDocID().then((value) {
       if (docIDs.isNotEmpty) {
         documentId = docIDs[0];
-        _databaseReference = FirebaseDatabase.instance.reference().child('/users/$documentId/Smart Posture/angle');
+        _databaseReference = FirebaseDatabase.instance.reference().child('/users/$documentId/$sensorValue/angle');
         _databaseReference.onValue.listen((event) {
           setState(() {
             gaugeDocIDs = docIDs;
