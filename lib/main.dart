@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             // Remove the debug banner
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(),
+            theme: ThemeData(primarySwatch: Colors.amber),
             darkTheme: ThemeData.dark(),
             themeMode: currentMode,
             home: AuthPage(),

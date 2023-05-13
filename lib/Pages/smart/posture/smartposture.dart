@@ -1,7 +1,7 @@
-import 'package:smartposture/Pages/analysis.dart';
-import 'package:smartposture/Pages/piechart.dart';
+import 'package:smartposture/Pages/smart/posture/analysis.dart';
+import 'package:smartposture/Pages/smart/posture/piechart.dart';
 import 'package:flutter/material.dart';
-import 'bad_posture_analysis.dart';
+import '../posture/bad_posture_analysis.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -33,7 +33,9 @@ class _SmartPostureState extends State<SmartPosture> {
             sensorValue = (userData?['sensor'] as String?)!;
       });
   }
+
   List<String> gaugeDocIDs = [];
+  
   @override
   void initState() {
     super.initState();

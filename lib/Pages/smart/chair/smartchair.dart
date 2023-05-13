@@ -1,5 +1,5 @@
-import 'package:smartposture/Pages/analysis.dart';
-import 'package:smartposture/Pages/piechart.dart';
+import 'package:smartposture/Pages/smart/chair/analysis.dart';
+import 'package:smartposture/Pages/smart/chair/piechart.dart';
 import 'package:flutter/material.dart';
 import 'bad_posture_analysis.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

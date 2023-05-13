@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:smartposture/pages/forgot_password_page.dart';
+import 'package:smartposture/services/forgot_password_page.dart';
 import 'package:smartposture/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:smartposture/components/my_button.dart';
