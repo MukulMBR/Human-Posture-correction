@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:csv/csv.dart';
@@ -11,15 +14,46 @@ class PosturePieChart extends StatefulWidget {
 class _PosturePieChartState extends State<PosturePieChart> {
   List<List<dynamic>> _rows = [];
 
-  @override
+  String url = '';
+  User? user = FirebaseAuth.instance.currentUser!;
+  late DatabaseReference _databaseReference;
+  late final String documentId;
+  List<String> docIDs = [];
+
+  Future<void> getDocID() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: user?.email)
+        .get();
+
+    setState(() {
+    docIDs = querySnapshot.docs.map((doc) => doc.id).toList();
+      Map<String, dynamic>? userData = querySnapshot.docs[0].data() as Map<String, dynamic>?;
+      url = (userData?['url'] as String?)!;
+    });
+  }
+
+      @override
   void initState() {
     super.initState();
-    _loadCSV();
+    getDocID().then((value) {
+      if (docIDs.isNotEmpty) {
+        documentId = docIDs[0];
+        _databaseReference = FirebaseDatabase.instance.reference().child('/users/$documentId');
+        _databaseReference.onValue.listen((event) {
+        });
+        _loadCSV();
+      } else {
+        // handle error: no document found for the user
+      }
+    }).catchError((error) {
+      // handle error: failed to fetch the document ID
+    });
   }
 
   Future<void> _loadCSV() async {
     try {
-      final response = await http.get(Uri.parse('https://drive.google.com/uc?id=17_UgYlbGAoKIHtRNgAF0wPkXleq0ExGf&export=download'));
+      final response = await http.get(Uri.parse(url));
       final List<List<dynamic>> csvTable = CsvToListConverter().convert(response.body);
       setState(() {
         _rows = csvTable;

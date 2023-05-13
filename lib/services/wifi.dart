@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class MyApp extends StatefulWidget {
+class wifi extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _wifiState createState() => _wifiState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _wifiState extends State<wifi> {
   String _ssid = "";
   String _password = "";
 
@@ -58,13 +58,15 @@ class _MyAppState extends State<MyApp> {
 @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'WiFi Manager',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: Scaffold(
         appBar: AppBar(
           title: Text('WiFi Manager'),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
         body: Center(
           child: Form(

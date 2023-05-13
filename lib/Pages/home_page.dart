@@ -2,15 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:smartposture/Pages/points.dart';
-import 'package:smartposture/Pages/sensors.dart';
+import 'package:smartposture/services/settings.dart';
 import 'package:smartposture/Pages/sensors.dart';
 import 'package:smartposture/profile/about.dart';
-import 'package:smartposture/profile/details.dart';
 import 'package:flutter/material.dart';
 import '../profile/profile.dart';
+import '../services/shop.dart';
 import '../services/wifi.dart';
 import 'smartchair.dart';
 import 'smartposture.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -88,7 +89,6 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.scoreboard),
           ),
         ],
-
       ),
       body: Center(
         child: Text('Home Page'),
@@ -99,12 +99,14 @@ class _HomePageState extends State<HomePage> {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                image: DecorationImage(
+                  image: AssetImage('lib/imports/images/kcpd.jpg'),
+                  fit: BoxFit.cover,
+                ),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  
                   SizedBox(height: 10),
                   Text(
                     "Hello: ${user!.email!} with ${sensorValue}",
@@ -197,12 +199,20 @@ class _HomePageState extends State<HomePage> {
             label: 'Posture',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'About',
+            icon: Icon(Icons.shopping_basket),
+            label: 'Shop',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.wifi),
+            icon: SizedBox(
+              height: 25,
+              width: 25,
+              child: Image.asset('lib/imports/images/wifi.gif'),
+            ),
             label: '$sensorValue',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
           ),
         ],
         onTap: (index) {
@@ -261,13 +271,19 @@ class _HomePageState extends State<HomePage> {
             // handle about button tap
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => PackageInfoWidget()),
+              MaterialPageRoute(builder: (context) => ShoppingPage()),
             );
           } else if (index == 4) {
             // handle about button tap
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MyApp()),
+              MaterialPageRoute(builder: (context) => wifi()),
+            );
+          } else if (index == 5) {
+            // handle about button tap
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SettingsPage()),
             );
           }
         },

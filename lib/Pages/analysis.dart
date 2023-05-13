@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:http/http.dart' as http;
@@ -10,6 +13,24 @@ class ChartPage extends StatefulWidget {
 
 class _ChartPageState extends State<ChartPage> {
   List<charts.Series<DataPoint, DateTime>> _seriesData = [];
+  String url = '';
+  User? user = FirebaseAuth.instance.currentUser!;
+  late DatabaseReference _databaseReference;
+  late final String documentId;
+  List<String> docIDs = [];
+
+    Future<void> getDocID() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: user?.email)
+        .get();
+
+    setState(() {
+    docIDs = querySnapshot.docs.map((doc) => doc.id).toList();
+      Map<String, dynamic>? userData = querySnapshot.docs[0].data() as Map<String, dynamic>?;
+      url = (userData?['url'] as String?)!;
+    });
+   }
 
   _generateDataFromCsv(String csv) {
     List<DataPoint> dataPoints = [];
@@ -39,9 +60,7 @@ class _ChartPageState extends State<ChartPage> {
     }
 
   Future<String> _fetchCsvData() async {
-    final response = await http.get(
-        Uri.parse(
-            'https://drive.google.com/uc?id=17_UgYlbGAoKIHtRNgAF0wPkXleq0ExGf&export=download'));
+    final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       return response.body;
     } else {
@@ -52,11 +71,23 @@ class _ChartPageState extends State<ChartPage> {
   @override
   void initState() {
     super.initState();
-    _fetchCsvData().then((csv) {
+        getDocID().then((value) {
+      if (docIDs.isNotEmpty) {
+        documentId = docIDs[0];
+        _databaseReference = FirebaseDatabase.instance.reference().child('/users/$documentId');
+        _databaseReference.onValue.listen((event) {
+        });
+        _fetchCsvData().then((csv) {
       _generateDataFromCsv(csv);
       setState(() {});
     }).catchError((error) {
       print('Error loading CSV: $error');
+    });
+      } else {
+        // handle error: no document found for the user
+      }
+    }).catchError((error) {
+      // handle error: failed to fetch the document ID
     });
   }
 

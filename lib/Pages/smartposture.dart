@@ -124,8 +124,8 @@ class _SmartPostureState extends State<SmartPosture> {
         child: SfRadialGauge(
           axes: <RadialAxis>[
             RadialAxis(
-              minimum: 0,
-              maximum: 100,
+              minimum: 100,
+              maximum: 200,
               ranges: <GaugeRange>[
                 GaugeRange(
                   startValue: 100,
