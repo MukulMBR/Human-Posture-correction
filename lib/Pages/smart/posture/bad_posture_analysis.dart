@@ -32,7 +32,7 @@ class _PosturePageState extends State<PosturePage> {
     });
   }
 
-   @override
+  @override
   void initState() {
     super.initState();
     getDocID().then((value) {
@@ -66,7 +66,7 @@ class _PosturePageState extends State<PosturePage> {
   void _analyzeBadPostureData() {
     for (var i = 0; i < data.length; i++) {
       int postureValue = int.tryParse(data[i][2].toString()) ?? 0;
-      if (postureValue > 130) {
+      if (postureValue > 140) {
         final date = data[i][0].toString().split(" ")[0];
         final time = data[i][0].toString().split(" ")[1];
         if (badPostureData.containsKey(date)) {

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:smartposture/Pages/smart/chair/points.dart';
+import 'package:smartposture/Pages/smart/posture/points.dart';
 import 'package:smartposture/profile/settings.dart';
 import 'package:smartposture/Pages/smart/sensors.dart';
 import 'package:smartposture/profile/about.dart';
@@ -81,10 +82,24 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             onPressed: () {
+              if(sensorValue=='Smart Chair'){
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Point()),
               );
+              }
+              else if(sensorValue=='Smart Posture'){
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SpPoint()),
+              );
+              }
+              else if(sensorValue=='Smart C P'){
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Point()),
+              );
+              }
             },
             icon: const Icon(Icons.scoreboard),
           ),

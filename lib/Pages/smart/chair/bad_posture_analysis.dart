@@ -19,7 +19,7 @@ class _PosturePageState extends State<PosturePage> {
   late final String documentId;
   List<String> docIDs = [];
 
-    Future<void> getDocID() async {
+  Future<void> getDocID() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('users')
         .where('email', isEqualTo: user?.email)
@@ -32,7 +32,7 @@ class _PosturePageState extends State<PosturePage> {
     });
   }
 
-    @override
+  @override
   void initState() {
     super.initState();
     getDocID().then((value) {

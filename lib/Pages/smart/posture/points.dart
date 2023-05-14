@@ -6,11 +6,11 @@ import 'package:csv/csv.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
-class Point extends StatefulWidget {
+class SpPoint extends StatefulWidget {
   @override
-  _PointState createState() => _PointState();
+  _SpPointState createState() => _SpPointState();
 }
-class _PointState extends State<Point> {
+class _SpPointState extends State<SpPoint> {
 
   List<List<dynamic>> _rows = [];
   Map<DateTime, double> _goodPointCounts = {};
@@ -65,6 +65,7 @@ class _PointState extends State<Point> {
       print('Error loading CSV file: $e');
     }
   }
+
   
   void _calculatePostureCounts() {
   DateTime intervalStart = DateTime.parse(_rows[1][0]);
@@ -85,7 +86,7 @@ class _PointState extends State<Point> {
     }
 
     // Update interval points based on posture value
-    if (postureValue > 13) {
+    if (postureValue > 150) {
       badPoints += 1.0;
     } else {
       intervalPoints += 1.0;
