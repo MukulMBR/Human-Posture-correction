@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import 'points.dart';
 
 class Analysis extends StatefulWidget {
   const Analysis({Key? key}) : super(key: key);
@@ -118,6 +119,19 @@ void initState() {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Smart Chair'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              if(sensorValue=='Smart Chair')
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Point()),
+              );
+            },
+            icon: const Icon(Icons.scoreboard),
+          ),
+        ],
+      
       ),
       body: Center(
         child: SfRadialGauge(

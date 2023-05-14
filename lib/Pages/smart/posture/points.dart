@@ -11,7 +11,6 @@ class SpPoint extends StatefulWidget {
   _SpPointState createState() => _SpPointState();
 }
 class _SpPointState extends State<SpPoint> {
-
   List<List<dynamic>> _rows = [];
   Map<DateTime, double> _goodPointCounts = {};
   Map<DateTime, double> _badPointCounts = {};

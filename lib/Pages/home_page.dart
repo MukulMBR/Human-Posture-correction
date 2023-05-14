@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:smartposture/Pages/smart/chair/points.dart';
-import 'package:smartposture/Pages/smart/posture/points.dart';
 import 'package:smartposture/profile/settings.dart';
 import 'package:smartposture/Pages/smart/sensors.dart';
 import 'package:smartposture/profile/about.dart';
@@ -80,33 +78,20 @@ class _HomePageState extends State<HomePage> {
           fontWeight: FontWeight.bold,),
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              if(sensorValue=='Smart Chair'){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Point()),
-              );
-              }
-              else if(sensorValue=='Smart Posture'){
+            IconButton(
+              onPressed: () {
                 Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SpPoint()),
-              );
-              }
-              else if(sensorValue=='Smart C P'){
-                Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Point()),
-              );
-              }
-            },
-            icon: const Icon(Icons.scoreboard),
-          ),
-        ],
-      ),
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingsPage()),
+                );
+              },
+              icon: const Icon(Icons.settings),
+            ),
+          ],    
+        ),
       body: Center(
         child: Text('Home Page'),
+        
       ),
       drawer: Drawer(
         child: ListView(
@@ -225,10 +210,6 @@ class _HomePageState extends State<HomePage> {
             ),
             label: '$sensorValue',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
         ],
         onTap: (index) {
           if (index == 0) {
@@ -293,12 +274,6 @@ class _HomePageState extends State<HomePage> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => wifi()),
-            );
-          } else if (index == 5) {
-            // handle about button tap
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SettingsPage()),
             );
           }
         },

@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import 'points.dart';
 
 class SmartPosture extends StatefulWidget {
   const SmartPosture({Key? key}) : super(key: key);
@@ -121,6 +122,18 @@ class _SmartPostureState extends State<SmartPosture> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Smart Posture'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SpPoint()),
+              );
+            },
+            icon: const Icon(Icons.scoreboard),
+          ),
+        ],
+      
       ),
       body: Center(
         child: SfRadialGauge(
