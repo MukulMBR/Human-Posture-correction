@@ -18,58 +18,44 @@ class Posture extends StatelessWidget {
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true, // align title to center
-            automaticallyImplyLeading: true, // add back button
-            bottom: TabBar(
-              tabs: [
-                Tab(
-                  icon: Image.asset(
-                    'lib/imports/images/sc.jpg',
-                    height: 40,
-                    width: 40,
-                  ),
-                  text: 'Smart Chair',
-                ),
-                Tab(
-                  icon: Image.asset(
-                    'lib/imports/images/sp.png',
-                    height: 40,
-                    width: 40,
-                  ),
-                  text: 'Smart Posture',
-                ),
-              ],
-            ),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ScPoint()),
-                    );
-                  },
-                  icon: const Icon(Icons.scoreboard),
-                ),
-                Center(
-                  child: Text(' Smart Chair and Smart Posture'),
-                ),
-              ],
-            ),
-            actions: [
+        appBar: AppBar(
+          automaticallyImplyLeading: true, // add back button
+          title: Row(
+            children: [
               IconButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DSpPoint()),
-                  );
+                  Navigator.pop(context); // Add back button functionality
                 },
-                icon: const Icon(Icons.scoreboard),
+                icon: const Icon(Icons.arrow_back), // Use the appropriate back icon
+              ),
+              const SizedBox(width: 8), // Add some spacing between back button and title
+              Center(
+                 child: Text(' Smart Chair and Posture'),
+                        ),
+            ],
+          ),
+          centerTitle: false, // align title to the left
+          bottom: TabBar(
+            tabs: [
+              Tab(
+                icon: Image.asset(
+                  'lib/imports/images/sc.jpg',
+                  height: 40,
+                  width: 40,
+                ),
+                text: 'Smart Chair',
+              ),
+              Tab(
+                icon: Image.asset(
+                  'lib/imports/images/sp.png',
+                  height: 40,
+                  width: 40,
+                ),
+                text: 'Smart Posture',
               ),
             ],
           ),
+        ),
 
           body: TabBarView(
             children: [
@@ -306,6 +292,10 @@ void initState() {
             icon: Icon(Icons.dangerous),
             label: 'Bad Posture',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.scoreboard),
+            label: 'Points',
+          ),
         ],
         onTap: (index) {
           if (index == 0) {
@@ -325,6 +315,13 @@ void initState() {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ScPosturePage()),
+            );
+          }
+          else if (index == 3) {
+            // handle about button tap
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ScPoint()),
             );
           }
         },
@@ -1001,6 +998,10 @@ class _SmartpostureState extends State<Smartposture> {
             icon: Icon(Icons.dangerous),
             label: 'Bad Posture',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.scoreboard),
+            label: 'Points',
+          ),
         ],
         onTap: (index) {
           if (index == 0) {
@@ -1020,6 +1021,13 @@ class _SmartpostureState extends State<Smartposture> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => SpPosturePage()),
+            );
+          }
+          else if (index == 3) {
+            // handle about button tap
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DSpPoint()),
             );
           }
         },
