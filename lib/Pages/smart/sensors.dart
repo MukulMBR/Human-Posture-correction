@@ -141,7 +141,7 @@ class _SmartChairState extends State<SmartChair> {
   }
   List<String> gaugeDocIDs = [];
   @override
-void initState() {
+  void initState() {
     super.initState();
     getDocID().then((value) {
       if (docIDs.isNotEmpty) {

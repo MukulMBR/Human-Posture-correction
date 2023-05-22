@@ -5,7 +5,7 @@ class ContributorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Image Page'),
+        title: Text('Contributors'),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -13,9 +13,10 @@ class ContributorPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'lib/imports/images/apple.jpg',
+                'lib/imports/images/Sumesh.jpeg',
                 fit: BoxFit.cover,
               ),
+              Text('Sumesh Ak'),
               SizedBox(height: 10),
               Row(
                 children: [
@@ -23,12 +24,12 @@ class ContributorPage extends StatelessWidget {
                     child: Column(
                       children: [
                         Image.asset(
-                          'lib/imports/images/google.jpg',
+                          'lib/imports/images/Dheeraj.jpeg',
                           fit: BoxFit.cover,
                           height: 200,
                         ),
                         SizedBox(height: 5),
-                        Text('Google'),
+                        Text('Dheeraj'),
                       ],
                     ),
                   ),
@@ -37,12 +38,12 @@ class ContributorPage extends StatelessWidget {
                     child: Column(
                       children: [
                         Image.asset(
-                          'lib/imports/images/icon.jpeg',
+                          'lib/imports/images/gnani.jpeg',
                           fit: BoxFit.cover,
                           height: 200,
                         ),
                         SizedBox(height: 5),
-                        Text('Your app icon'),
+                        Text('Nikhil'),
                       ],
                     ),
                   ),
@@ -55,12 +56,12 @@ class ContributorPage extends StatelessWidget {
                     child: Column(
                       children: [
                         Image.asset(
-                          'lib/imports/images/kcpd.jpg',
+                          'lib/imports/images/Balaram.jpeg',
                           fit: BoxFit.cover,
                           height: 200,
                         ),
                         SizedBox(height: 5),
-                        Text('KCPD'),
+                        Text('Balaram'),
                       ],
                     ),
                   ),
@@ -69,12 +70,12 @@ class ContributorPage extends StatelessWidget {
                     child: Column(
                       children: [
                         Image.asset(
-                          'lib/imports/images/mb.jpg',
+                          'lib/imports/images/Mukul.jpeg',
                           fit: BoxFit.cover,
                           height: 200,
                         ),
                         SizedBox(height: 5),
-                        Text('MB'),
+                        Text('Mukul'),
                       ],
                     ),
                   ),
