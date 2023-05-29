@@ -166,18 +166,19 @@ class _SmartPostureState extends State<SmartPosture> {
                   animationType: AnimationType.easeOutBack,
                 ),
               ],
-              annotations: <GaugeAnnotation>[
-                GaugeAnnotation(
-                  widget: Text(
-                    'Sensor data',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              annotations: [
+                if (_sensorData < 140)
+                  GaugeAnnotation(
+                    widget: Text(
+                      'Good Posture',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    positionFactor: 0.3,
+                    angle: 90,
                   ),
-                  positionFactor: 0.1,
-                  angle: 90,
-                ),
                 GaugeAnnotation(
                   widget: Text(
-                    '$_sensorData cm',
+                    _sensorData < 140 ? '$_sensorData' : 'Bad Posture',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   positionFactor: 0.6,

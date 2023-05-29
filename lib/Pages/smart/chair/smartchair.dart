@@ -8,6 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'points.dart';
 
+
 class Analysis extends StatefulWidget {
   const Analysis({Key? key}) : super(key: key);
   @override
@@ -36,25 +37,45 @@ class _AnalysisState extends State<Analysis> {
   }
   List<String> gaugeDocIDs = [];
   @override
-void initState() {
-    super.initState();
-    getDocID().then((value) {
-      if (docIDs.isNotEmpty) {
-        documentId = docIDs[0];
-        _databaseReference = FirebaseDatabase.instance.reference().child('/users/$documentId/$sensorValue/distance');
-        _databaseReference.onValue.listen((event) {
-          setState(() {
-            gaugeDocIDs = docIDs;
-            _sensorData = double.parse(event.snapshot.value.toString());
+  void initState() {
+      super.initState();
+      getDocID().then((value) {
+        if (docIDs.isNotEmpty) {
+          documentId = docIDs[0];
+          _databaseReference = FirebaseDatabase.instance.reference().child('/users/$documentId/$sensorValue/distance');
+          _databaseReference.onValue.listen((event) {
+            setState(() {
+              gaugeDocIDs = docIDs;
+              _sensorData = double.parse(event.snapshot.value.toString());
+            });
+          }, onError: (Object? error) {
+            // handle error: failed to fetch sensor data from the realtime database
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Error'),
+                  content: Text('Failed to fetch sensor data from the realtime database. Please check the database path and try again.'),
+                  actions: [
+                    TextButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
           });
-        }, onError: (Object? error) {
-          // handle error: failed to fetch sensor data from the realtime database
+        } else {
+          // handle error: no document found for the user
           showDialog(
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
                 title: Text('Error'),
-                content: Text('Failed to fetch sensor data from the realtime database. Please check the database path and try again.'),
+                content: Text('No document found for the user. Please check your account and try again.'),
                 actions: [
                   TextButton(
                     child: Text('OK'),
@@ -66,15 +87,15 @@ void initState() {
               );
             },
           );
-        });
-      } else {
-        // handle error: no document found for the user
+        }
+      }).catchError((error) {
+        // handle error: failed to fetch the document ID
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text('Error'),
-              content: Text('No document found for the user. Please check your account and try again.'),
+              content: Text('Failed to fetch the document ID from Firestore. Please check your account and try again.'),
               actions: [
                 TextButton(
                   child: Text('OK'),
@@ -86,34 +107,15 @@ void initState() {
             );
           },
         );
-      }
-    }).catchError((error) {
-      // handle error: failed to fetch the document ID
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to fetch the document ID from Firestore. Please check your account and try again.'),
-            actions: [
-              TextButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    });
-  }
+      });
+    }
 
   @override
   void dispose() {
     _databaseReference.onDisconnect();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,18 +166,19 @@ void initState() {
                   animationType: AnimationType.easeOutBack,
                 ),
               ],
-              annotations: <GaugeAnnotation>[
-                GaugeAnnotation(
-                  widget: Text(
-                    '$sensorValue',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              annotations: [
+                if (_sensorData < 14)
+                  GaugeAnnotation(
+                    widget: Text(
+                      'Good Posture',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    positionFactor: 0.3,
+                    angle: 90,
                   ),
-                  positionFactor: 0.1,
-                  angle: 90,
-                ),
                 GaugeAnnotation(
                   widget: Text(
-                    '$_sensorData cm',
+                    _sensorData < 14 ? '$_sensorData cm' : 'Bad Posture',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   positionFactor: 0.6,
