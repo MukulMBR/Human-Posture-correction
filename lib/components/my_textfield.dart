@@ -6,12 +6,17 @@ class MyTextField extends StatelessWidget {
   final bool requiredField;
   final String? errorText;
 
+  final GestureTapCallback? onTap;
+  final ValueChanged<String>? onChanged;
+
   const MyTextField({
     Key? key,
     required this.controller,
     required this.hintText,
     required this.obscureText,
     required this.requiredField,
+    this.onTap,
+    this.onChanged,
     this.errorText,
   }) : super(key: key);
 
