@@ -14,7 +14,8 @@ The goals of this project are to:
 
 This project depends on the following libraries:
 
-* [list the project's dependencies]
+* Firebase
+* Rive 
 
 ## Usage
 
